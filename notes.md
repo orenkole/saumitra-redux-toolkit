@@ -9,7 +9,7 @@
 
 ## Working on Header
 
-## Configure and Writing 1st action with Redux Toolkitls
+## Configure and Writing 1st action with Redux Toolkit
 
 _redux-toolkit-cocktail/src/redux/features/cocktailSlice.js_
 ```js
@@ -62,3 +62,5 @@ export const store = configureStore ({
   }
 })
 ```
+
+## Search Component
