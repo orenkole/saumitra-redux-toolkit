@@ -64,3 +64,7 @@ export const store = configureStore ({
 ```
 
 ## Search Component
+commit  
+
+## Render Cocktails using Redux Toolkit Actions
+
