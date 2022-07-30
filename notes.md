@@ -410,3 +410,7 @@ RTK is built into redux toolkit
 - <ApiProvider /> - can be used as Provider if you don't have store
 - setUpListeners() - utility to enable `refetchOnMoun` and `refetchOnReconnect`
 
+## Project setup
+
+`npx create-react-app rtk-random-user --template redux`  
+`npm i react-icons`
