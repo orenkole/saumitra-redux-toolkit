@@ -288,3 +288,29 @@ import {deletePost, getPost} from "../redux/features/postSlice";
       onClick={() => dispatch(deletePost({id: post[0].id}))}
     >
 ```
+
+## POST action with createAsyncThunk
+
+_postSlice_
+```js
+export const createPost = createAsyncThunk(
+  "post/createPost",
+  async ({values}) =>{
+    return fetch(`https://jsonplaceholder.typicode.com/posts/`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        title: values.title,
+        body: values.body
+      })
+    })
+      .then(res => res.json());
+  }
+)
+```
+
+## Create Post Form
+## Dispatch POST createAsyncThunk action
