@@ -145,3 +145,63 @@ import "antd/dist/antd.css";
 
 ## Basic form
 
+## Configuration & Writing GET Action using createAsyncThunk
+
+_postSlice_
+```js
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+
+
+export const getPost = createAsyncThunk(
+  "post/getPost",
+  async ({id}) =>{
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+      .then(res => res.json());
+  }
+)
+
+const postSlice = createSlice({
+  name: 'post',
+  initialState: {
+    post: [],
+    loading: false,
+    error: null,
+  },
+  extraReducers: {
+    [getPost.pending]: (state, action) => {
+      state.loading = true
+    },
+    [getPost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.post = [action.payload];
+    },
+    [getPost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+  }
+})
+
+export default postSlice.reducer;
+```
+
+_store.js_
+```js
+import {configureStore} from "@reduxjs/toolkit";
+import PostReducer from "./features/postSlice"
+
+export default configureStore({
+  reducer: {
+    app: PostReducer,
+  }
+})
+```
+
+_index.js_
+```js
+import {Provider} from "react-redux";
+import store from "./redux/store";
+<Provider store={store}>
+  <App />
+</Provider>
+```
