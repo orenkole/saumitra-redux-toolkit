@@ -140,3 +140,8 @@ _crud-api-toolkit/src/index.js_
 ```js
 import "antd/dist/antd.css";
 ```
+
+## Structuring
+
+## Basic form
+
