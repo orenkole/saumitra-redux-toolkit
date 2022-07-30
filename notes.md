@@ -127,3 +127,16 @@ _redux-toolkit-cocktail/src/component/SearchInput.js_
 <input type="text" name="name" id="name" ref={searchValue} onChange={handleChange} />
 
 ```
+
+# Section 3. Project 2 - CRUD with redux toolkit
+
+## Set-up
+
+https://jsonplaceholder.typicode.com/  
+
+`npm i -D antd @reduxjs/toolkit react-router-dom react-redux`  
+
+_crud-api-toolkit/src/index.js_
+```js
+import "antd/dist/antd.css";
+```
