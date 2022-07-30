@@ -239,3 +239,52 @@ const Home = () => {
     </>
   )}
 ```
+
+## Adding buttons
+
+## DELETE with createAsyncThunk
+
+_postSlice.js_
+```js
+export const deletePost = createAsyncThunk(
+  "post/deletePost",
+  async ({id}) =>{
+    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      method: "DELETE"
+    })
+      .then(res => res.json());
+  }
+)
+
+
+const postSlice = createSlice({
+  name: 'post',
+  initialState: {
+    post: [],
+    loading: false,
+    error: null,
+  },
+  extraReducers: {
+    //...
+  }
+    [deletePost.pending]: (state, action) => {
+      state.loading = true
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.post = action.payload;
+    },
+    [deletePost.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+```
+
+_index.js_
+```js
+import {deletePost, getPost} from "../redux/features/postSlice";
+//...
+    <Button
+      onClick={() => dispatch(deletePost({id: post[0].id}))}
+    >
+```
