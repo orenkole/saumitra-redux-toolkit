@@ -68,3 +68,62 @@ commit
 
 ## Render Cocktails using Redux Toolkit Actions
 
+_redux-toolkit-cocktail/src/component/CocktailList.js_
+```js
+import {fetchCocktails} from "../redux/features/cocktailSlice";
+//...
+  useEffect(() => {
+    dispatch(fetchCocktails());
+  }, []);
+```
+## createAsyncThunk Action to Fetch Single Cocktail
+## Working on Single Cocktail
+
+## Searching with createAsyncThunk Action
+
+_redux-toolkit-cocktail/src/redux/features/cocktailSlice.js_
+```js
+//...
+
+export const fetchSearchCocktail = createAsyncThunk(
+  "cocktails/fetchSearchCocktails",
+  async ({searchText}) => {
+    return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchText}`)
+      .then(res => res.json())
+  }
+)
+//...
+
+const cocktailSlice = createSlice({
+  name: "cocktails",
+  initialState: {
+    cocktails: [],
+    cocktail: [],
+    loading: false,
+    error: null,
+  },
+  extraReducers: {
+    [fetchSearchCocktail.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchSearchCocktail.fulfilled]: (state, action) => {
+      state.cocktails = action.payload.drinks
+      state.loading = false;
+    },
+    [fetchSearchCocktail.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    }
+  }
+})
+```
+_redux-toolkit-cocktail/src/component/SearchInput.js_
+```js
+  const handleChange = () => {
+    const searchText = searchValue.current.value;
+    dispatch(fetchSearchCocktail({searchText}))
+  }
+
+<input type="text" name="name" id="name" ref={searchValue} onChange={handleChange} />
+
+```
