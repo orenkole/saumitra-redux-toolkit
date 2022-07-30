@@ -399,3 +399,14 @@ _index.js_
       onClick={() => {dispatch(setEdit({edit: true, body: post[0].body}))}}
     >Edit</Button>
 ```
+
+# Section 4. Project 3 - RTK query random user app
+
+## What is RTK query?
+
+RTK is built into redux toolkit  
+- createApi() - define set of endpoint to fetch data  
+- fetchBaseQuery() - wrapper around fetch to simplify request
+- <ApiProvider /> - can be used as Provider if you don't have store
+- setUpListeners() - utility to enable `refetchOnMoun` and `refetchOnReconnect`
+
