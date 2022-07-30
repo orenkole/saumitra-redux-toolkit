@@ -314,3 +314,88 @@ export const createPost = createAsyncThunk(
 
 ## Create Post Form
 ## Dispatch POST createAsyncThunk action
+
+## PUT action with createAsyncThunk
+We'll have edit mode  
+
+_postSlice_
+```js
+const postSlice = createSlice({
+  name: 'post',
+  initialState: {
+//...
+    body: "",
+    edit: false
+  },
+  reducers: {
+    setEdit: (state, action) => {
+      state.edit = action.payload.edit;
+      state.body = action.payload.body;
+    }
+  },
+
+export const {setEdit} = postSlice.actions;
+```
+
+## Populate post data on form
+
+```js
+
+                <Button
+                  style={{ cursor: 'pointer' }}
+                  type="primary"
+                  onClick={() => {dispatch(setEdit({edit: true, body: post[0].body}))}}
+                >Edit</Button>
+```
+
+## Dispatch PUT createAsyncThunk action to Update
+
+_index.js_
+```js
+    const [bodyText, setBodyText] = useState();
+    const {loading, post, edit, body} = useSelector((state) => ({...state.app}))
+    useEffect(() => {
+      if (body) {
+        setBodyText(body);
+      }
+    }, [body])
+
+    {edit ? (
+      <>
+        <Input.TextArea
+          rows={4}
+          value={bodyText}
+          onChange={(e) => {setBodyText(e.target.value)}}
+        />
+        <Space size="middle" style={{ marginTop: 5, marginLeft: 5 }}>
+          <Button
+            type="primary"
+            onClick={() => {
+              dispatch(updatePost({
+                id: post[0].id,
+                title: post[0].title,
+                body: bodyText
+              }));
+              dispatch(setEdit({edit: false, body: ''}))
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(setEdit({edit: false, body: ''}))
+            }}
+          >Cancel</Button>
+        </Space>
+      </>
+    ) : (
+      <span>{post[0].body}</span>
+    )}
+    
+    //...
+    <Button
+      style={{ cursor: 'pointer' }}
+      type="primary"
+      onClick={() => {dispatch(setEdit({edit: true, body: post[0].body}))}}
+    >Edit</Button>
+```
