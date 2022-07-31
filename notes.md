@@ -459,3 +459,34 @@ setupListeners(store.dispatch);
 remove /features, remove /app folders  
 `npm i react-router-dom react-toastify`
 
+## Configure and Writing First RTK Query
+_rtk-crud/src/services/contactsApi.tsx_
+```js
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
+import {Contact} from "../model/contact.model";
+
+export const contactsApi = createApi({
+    reducerPath: "contactsApi",
+    baseQuery: fetchBaseQuery({baseUrl: "http://localhost:5000"}),
+    endpoints: (builder) => ({
+        contacts: builder.query<Contact[], void>({
+            query: () => "/contacts",
+        })
+    })
+})
+
+export const {useContactsQuery} = contactsApi;
+```
+
+_rtk-crud/src/store.tsx_
+```js
+import {contactsApi} from "./services/contactsApi";
+import {configureStore} from "@reduxjs/toolkit";
+
+export const store = configureStore({
+    reducer: {
+        [contactsApi.reducerPath]: contactsApi.reducer
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(contactsApi.middleware)
+})
+```
