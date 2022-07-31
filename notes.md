@@ -490,3 +490,15 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(contactsApi.middleware)
 })
 ```
+
+## Show Data with RTK Query
+_rtk-crud/src/pages/Home.tsx_
+```js
+const Home = () => {
+    const {data, isLoading, error} = useContactsQuery();
+//...
+  <tbody>
+    {data?.map((item, index) => {
+      return (
+        <tr key={item.id}>
+```
