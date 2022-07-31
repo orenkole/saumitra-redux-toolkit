@@ -513,3 +513,27 @@ import {ToastContainer} from "react-toastify";
   <ToastContainer />
   <Routes>
 ```
+
+## Working on POST RTK Query
+_contactsApi.tsx_
+```js
+export const contactsApi = createApi({
+    reducerPath: "contactsApi",
+    baseQuery: fetchBaseQuery({baseUrl: "http://localhost:5000"}),
+    endpoints: (builder) => ({
+//...
+        addContact: builder.mutation<{}, Contact>({
+            query: (contact) => ({
+                url: '/contacts',
+                method: 'POST',
+                body: contact
+            })
+        })
+    })
+})
+
+export const {
+//...
+  useAddContactMutation
+} = contactsApi;
+```
