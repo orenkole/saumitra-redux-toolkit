@@ -414,3 +414,40 @@ RTK is built into redux toolkit
 
 `npx create-react-app rtk-random-user --template redux`  
 `npm i react-icons`
+
+## Configure RTK and Writing 1st Query
+
+_rtk-random-user/src/services/user.js_
+```js
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react";
+
+export const usersApi = createApi({
+  reducerPath: "users",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://randomuser.me"
+  }),
+  endpoints: builder => ({
+    getUsers: builder.query({
+      query: () => "api"
+    })
+  })
+})
+
+export const {useGetUsersQuery} = usersApi;
+```
+
+_rtk-random-user/src/app/store.js_
+```js
+import { configureStore } from '@reduxjs/toolkit';
+import {usersApi} from "../services/user";
+import {setupListeners} from "@reduxjs/toolkit/query";
+
+export const store = configureStore({
+  reducer: {
+    [usersApi.reducerPath]: usersApi.reducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(usersApi.middleware)
+})
+
+setupListeners(store.dispatch);
+```
