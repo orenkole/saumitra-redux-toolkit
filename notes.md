@@ -451,3 +451,11 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 ```
+
+# Section 5. Project 4 - RTK query CRUD app
+
+## Set up
+`npx create-react-app rtk-crud --template redux-typescript`  
+remove /features, remove /app folders  
+`npm i react-router-dom react-toastify`
+
