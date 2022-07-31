@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useContactsQuery} from "../services/contactsApi";
 import {Link} from "react-router-dom";
 import "./Home.css";
+import {toast} from "react-toastify";
 
 const Home = () => {
     const {data, isLoading, error} = useContactsQuery();
+
+    useEffect(() => {
+        if(error) {
+            toast.error("Something went wrong")
+        }
+    }, [error])
 
     if (isLoading) {
         return <h3>Loading...</h3>

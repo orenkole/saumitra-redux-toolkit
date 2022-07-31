@@ -502,3 +502,14 @@ const Home = () => {
       return (
         <tr key={item.id}>
 ```
+
+## Handling Error with RTK Query
+_App.tsx_
+```js
+import "react-toastify/dist/ReactToastify.css"
+import {ToastContainer} from "react-toastify";
+//...
+<BrowserRouter>
+  <ToastContainer />
+  <Routes>
+```
