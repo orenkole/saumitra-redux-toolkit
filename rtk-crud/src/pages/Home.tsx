@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useContactsQuery} from "../services/contactsApi";
+import {useContactsQuery, useDeleteContactMutation} from "../services/contactsApi";
 import {Link} from "react-router-dom";
 import "./Home.css";
 import {toast} from "react-toastify";
@@ -13,9 +13,21 @@ const Home = () => {
         }
     }, [error])
 
+    const [deleteContact] = useDeleteContactMutation();
+
     if (isLoading) {
         return <h3>Loading...</h3>
     }
+
+    const handleDelete = async (id: any) => {
+        if (
+            window.confirm("Are you sure that you wanted to delete that contact ?")
+        ) {
+            await deleteContact(id);
+            toast.success("Contact Deleted Successfully");
+        }
+    };
+
     return (
         <div style={{ marginTop: '100px'}}>
             <Link to="/addContact">
@@ -45,7 +57,8 @@ const Home = () => {
                                     <Link to={`/editContact/${item.id}`}>
                                         <button className="btn btn-edit">Edit</button>
                                     </Link>
-                                    <button className="btn btn-delete">
+                                    <button className="btn btn-delete" onClick={() => handleDelete(item.id)}
+                                    >
                                         Delete
                                     </button>
                                     <Link to={`/info/${item.id}`}>
