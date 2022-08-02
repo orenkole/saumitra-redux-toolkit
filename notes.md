@@ -537,3 +537,18 @@ export const {
   useAddContactMutation
 } = contactsApi;
 ```
+
+## User RTK Query to add data
+
+```js
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!name && !email && !contact) {
+        toast.error("Please provide value into each input field");
+    } else {
+        await addContact(formValue);
+        navigate("/");
+        toast.success("Contact Added Successfully");
+    }
+  };
+```
