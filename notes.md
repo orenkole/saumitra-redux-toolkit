@@ -585,3 +585,15 @@ export const contactsApi = createApi({
     })
 })
 ```
+
+# Section 6. Project 5 - Movie App with Redux-saga & redux-toolkit
+
+## Project setup
+`npx create-react-app movie-app`  
+`npm install @mui/material @emotion/react @emotion/styled`  
+`npm install react-redux @reduxjs/toolkit redux-saga react-router-dom axios`
+
+## Configure OMDB movie api key
+
+https://www.omdbapi.com/  
+
