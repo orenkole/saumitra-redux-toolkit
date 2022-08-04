@@ -597,3 +597,5 @@ export const contactsApi = createApi({
 
 https://www.omdbapi.com/  
 
+## App structure and cleanup
+
