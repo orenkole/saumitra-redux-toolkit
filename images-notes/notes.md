@@ -655,3 +655,77 @@ import store from "./redux/store";
 
 ## Enable routing
 
+## Working on Actions & API - Fetch Movies
+Add reducers:  
+_movie-app/src/redux/feature/movieSlice.js_
+```js
+import {createSlice} from '@reduxjs/toolkit';
+
+const movieSlice = createSlice({
+  name: 'movie',
+  initialState: {
+    movieList: [],
+    movie: {}
+  },
+  reducers: {
+    getMovies(name) {
+      return name
+    },
+    setMovies: (state, action) => {
+      state.moviesList = action.payload
+    }
+  }
+})
+
+export const {
+  getMovies,
+  setMovies,
+} = movieSlice.actions;
+
+export default movieSlice.reducer;
+```
+_api.js_
+```js
+import axios from 'axios'
+
+const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${process.env.REACT_APP_MOVIE_API_KEY}`
+
+export const fetchMovies = async (movieName) => axios.get(`${API_ENDPOINT}&s=${movieName}`)
+```
+
+## Working on Saga - Fetch Movies
+_/redux/movieSagas.js_
+```js
+import {takeLatest, put, fork, call} from 'redux-saga/effects'
+import {getMovies, setMovies} from "./feature/movieSlice";
+import {fetchMovies} from "./api";
+
+function* onLoadMoviesAsync({payload}) {
+  try {
+    const movieName = payload;
+    const response = yield call(fetchMovies, movieName)
+    if (response.status === 200) {
+      yield put(setMovies({...response.data}))
+    }
+  } catch(error) {
+    console.log(error)
+  }
+}
+function* onLoadMovies() {
+  yield takeLatest(getMovies.type, onLoadMoviesAsync);
+}
+
+export const movieSagas = [
+  fork(onLoadMovies)
+]
+```
+
+_/redux/rootSaga.js_
+```js
+import {all} from 'redux-saga/effects'
+import {movieSagas} from './movieSagas';
+
+export default function* rootSaga() {
+  yield all([...movieSagas])
+}
+```
