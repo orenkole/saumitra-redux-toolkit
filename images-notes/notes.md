@@ -652,3 +652,6 @@ import store from "./redux/store";
     </React.StrictMode>
   </Provider>
 ```
+
+## Enable routing
+
