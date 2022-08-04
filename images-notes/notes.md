@@ -1,5 +1,5 @@
 ## Understand Redux Toolkit API
-![img.png](images-notes/rtk-api.png)
+![img.png](rtk-api.png)
 
 # Section 2: Project 1 - Cocktail app with redux toolkit
 
@@ -599,3 +599,56 @@ https://www.omdbapi.com/
 
 ## App structure and cleanup
 
+## Configure redux-toolkit & redux-saga
+
+![img.png](../movies-redux.png)
+
+_movie-app/src/redux/feature/movieSlice.js_
+```js
+import {createSlice} from '@reduxjs/toolkit';
+
+const movieSlice = createSlice({
+  name: 'movie',
+  initialState: {
+    movieList: [],
+    movie: {}
+  }
+})
+
+export default movieSlice.reducer;
+```
+
+_movie-app/src/redux/store.js_ 
+```js
+import {configureStore} from "@reduxjs/toolkit";
+import createSagaMiddleware from 'redux-saga';
+import MovieReducer from './feature/movieSlice';
+import rootSaga from './rootSaga';
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+  reducer: {
+    movie: MovieReducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(
+    sagaMiddleware
+  )
+})
+
+// sagaMiddleware.run(rootSaga);
+
+export default store;
+```
+
+__
+```js
+import {Provider} from "react-redux";
+import store from "./redux/store";
+
+  <Provider store={store} >
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>
+```
