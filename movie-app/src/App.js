@@ -9,8 +9,8 @@ function App() {
       <h2>Redux toolkit with saga</h2>
       <BrowserRouter>
         <Routes>
-          <Route to="/" element={<Home />} />
-          <Route to="/movie/:id" element={<Movie />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<Movie />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -14,6 +14,6 @@ const store = configureStore({
   )
 })
 
-// sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(rootSaga);
 
 export default store;
