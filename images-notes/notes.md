@@ -813,3 +813,6 @@ export const movieSagas = [
   fork(..., onLoadMovie)
 ]
 ```
+
+## Single Movie Page
+
