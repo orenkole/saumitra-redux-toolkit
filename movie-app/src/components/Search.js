@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import useStyles from '../styles'
 import {TextField} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getMovies} from "../redux/feature/movieSlice";
 
 const Search = () => {
   const [name, setName] = useState('spider')
   const classes = useStyles();
+
+  const {movieList: {Error: error}} = useSelector(state => ({...state.movie}))
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,9 +26,11 @@ const Search = () => {
           sx={{m: 1, width: '55ch' }}
           onChange={(e) => { setName(e.target.value)}}
         />
+        {error && <p className={classes.error}>{error}</p> }
       </form>
     </>
   );
 };
 
 export default Search;
+

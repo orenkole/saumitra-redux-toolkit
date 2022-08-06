@@ -769,3 +769,8 @@ const Search = () => {
 export default Search;
 ```
 ![img.png](movies-in-redux.png)
+
+## Handle error
+
+## Render movies list item
+
