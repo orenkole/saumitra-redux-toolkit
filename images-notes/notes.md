@@ -774,3 +774,42 @@ export default Search;
 
 ## Render movies list item
 
+## Action, API & Saga - Fetch Single Movie
+
+_/redux/feature/movieSlice.js_
+```js
+    getMovie(id) {
+      return id
+    },
+    setMovie: (state, action) => {
+      state.movie = action.payload;
+    }
+```
+
+__
+```js
+export const fetchMovie = async (movieId) => axios.get(`${API_ENDPOINT}&i=${movieId}`)
+```
+
+_/redux/movieSagas.js_
+```js
+function* onLoadMovieAsync({payload}) {
+  try {
+    const id = payload;
+    const response = yield call(fetchMovies, id)
+    if (response.status === 200) {
+      yield put(setMovie({...response.data}))
+    }
+  } catch(error) {
+    console.log(error)
+  }
+}
+
+function* onLoadMovie() {
+  yield takeLatest(getMovie.type, onLoadMovieAsync);
+}
+
+export const movieSagas = [
+  fork(..., onLoadMovie)
+]
+```
